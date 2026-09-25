@@ -1,36 +1,160 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Product Admin Dashboard
 
-## Getting Started
+A responsive Product Admin Dashboard built with Next.js, React, Tailwind CSS, Axios, and DummyJSON.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js
+- React
+- JavaScript
+- Tailwind CSS
+- Axios
+- DummyJSON API
+- LocalStorage
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Login using DummyJSON authentication API
+- Test username: `emilys`
+- Test password: `emilyspass`
+- Access token stored in LocalStorage
+- Protected product pages
+- Logout functionality
+- Prevents multiple login requests
 
-## Learn More
+### Product Management
 
-To learn more about Next.js, take a look at the following resources:
+- Product list
+- Product details
+- Add product
+- Edit product
+- Delete product
+- Delete confirmation
+- Form validation
+- Loading states
+- Error states
+- Empty states
+- Retry functionality
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Search
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Product search using DummyJSON search API
+- 500ms debounce
+- Search resets pagination to page 1
+- Search state stored in URL
+- Previous search requests are cancelled to prevent stale results
 
-## Deploy on Vercel
+### Filtering
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Category filter
+- Categories loaded from DummyJSON
+- Search and category filter are handled separately because the DummyJSON API does not provide a reliable combined search + category endpoint
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Sorting
+
+Available sorting options:
+
+- Price: Low to High
+- Price: High to Low
+- Rating: High to Low
+- Rating: Low to High
+- Title: A to Z
+- Title: Z to A
+
+### Pagination
+
+- Previous / Next buttons
+- Page numbers
+- Page sizes:
+  - 10
+  - 20
+  - 50
+- Current page stored in URL
+- Page size stored in URL
+
+Example:
+
+`/products?page=2&limit=20`
+
+### Responsive Design
+
+Desktop:
+
+- Product table
+
+Mobile:
+
+- Product cards
+
+### Product Details
+
+Product details include:
+
+- Images
+- Title
+- Description
+- Price
+- Category
+- Brand
+- Rating
+- Stock
+- SKU
+- Reviews
+
+### CRUD Persistence
+
+DummyJSON simulates POST, PUT and DELETE operations rather than permanently changing the remote dataset.
+
+To provide a consistent user experience, the application also stores local CRUD changes in LocalStorage.
+
+LocalStorage keeps track of:
+
+- Created products
+- Updated products
+- Deleted product IDs
+
+This allows changes to remain visible after refreshing the browser.
+
+## Project Structure
+
+```text
+product-admin-dashboard/
+│
+├── app/
+│   ├── login/
+│   │   └── page.js
+│   │
+│   ├── products/
+│   │   ├── add/
+│   │   │   └── page.js
+│   │   │
+│   │   ├── [id]/
+│   │   │   ├── edit/
+│   │   │   │   └── page.js
+│   │   │   │
+│   │   │   └── page.js
+│   │   │
+│   │   └── page.js
+│   │
+│   ├── globals.css
+│   ├── layout.js
+│   └── page.js
+│
+├── components/
+│   └── ProductForm.js
+│
+├── hooks/
+│   └── useDebounce.js
+│
+├── lib/
+│   ├── axios.js
+│   ├── authApi.js
+│   ├── productApi.js
+│   └── productStorage.js
+│
+├── public/
+│
+├── package.json
+└── README.md
